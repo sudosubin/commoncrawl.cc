@@ -1,0 +1,4 @@
+.vite
+coverage
+dist
+node_modules
