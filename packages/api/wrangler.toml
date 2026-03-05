@@ -1,0 +1,14 @@
+"$schema" = "./node_modules/wrangler/config-schema.json"
+name = "commoncrawl-cc-api"
+main = "src/index.ts"
+compatibility_date = "2026-03-04"
+
+[vars]
+CORS_ALLOW_ORIGIN = "https://commoncrawl.cc"
+INDEX_UPSTREAM_BASE_URL = "https://index.commoncrawl.org"
+INDEX_UPSTREAM_TIMEOUT_MS = "20000"
+
+[env.local.vars]
+CORS_ALLOW_ORIGIN = "http://localhost:3000"
+INDEX_UPSTREAM_BASE_URL = "https://index.commoncrawl.org"
+INDEX_UPSTREAM_TIMEOUT_MS = "20000"
