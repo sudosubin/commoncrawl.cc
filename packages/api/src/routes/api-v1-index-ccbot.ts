@@ -1,4 +1,3 @@
-import { sValidator } from "@hono/standard-validator";
 import { Hono } from "hono";
 import { describeRoute, resolver } from "hono-openapi";
 import * as v from "valibot";
@@ -9,8 +8,6 @@ import {
   type Bindings,
 } from "@/types";
 import { request } from "@/utils/network";
-
-const querySchema = v.record(v.string(), v.string());
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -26,7 +23,6 @@ const responseSchema = v.object({
 
 app.get(
   "/api/v1/index/ccbot.json",
-  sValidator("query", querySchema),
   describeRoute({
     responses: {
       200: {
