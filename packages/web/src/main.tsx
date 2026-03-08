@@ -5,6 +5,11 @@ import { App } from "@/app";
 
 import "@/styles.css";
 
+if (import.meta.env.DEV && import.meta.env.VITE_USE_MSW === "true") {
+  const { startMockWorker } = await import("@/mocks/browser");
+  await startMockWorker();
+}
+
 render(
   <LocationProvider>
     <App />

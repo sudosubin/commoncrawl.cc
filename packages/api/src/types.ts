@@ -64,6 +64,7 @@ export const collectionNotFoundResponse = {
   content: {
     "text/plain": {
       schema: resolver(plainTextSchema),
+      example: "Not Found",
     },
   },
 };
@@ -73,9 +74,11 @@ export const tooManyRequestsResponse = {
   content: {
     "text/plain": {
       schema: resolver(plainTextSchema),
+      example: "Too Many Requests",
     },
     "text/html": {
       schema: resolver(v.string()),
+      example: "<html><body><h1>429 Too Many Requests</h1></body></html>",
     },
   },
 };
@@ -85,9 +88,11 @@ export const serviceUnavailableResponse = {
   content: {
     "text/plain": {
       schema: resolver(plainTextSchema),
+      example: "Service Unavailable",
     },
     "text/html": {
       schema: resolver(v.string()),
+      example: "<html><body><h1>503 Service Unavailable</h1></body></html>",
     },
   },
 };

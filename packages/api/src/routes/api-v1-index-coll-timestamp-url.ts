@@ -21,6 +21,19 @@ const paramSchema = v.object({
 });
 
 const responseSchema = v.string();
+const htmlExample = [
+  '<!doctype html><html lang="en"><head>',
+  "<!-- WB Insert -->",
+  "<script>",
+  "wbinfo = {};",
+  'wbinfo.top_url = "https://index.commoncrawl.org/CC-MAIN-2026-08/20260206181759/https://www.example.com/";',
+  'wbinfo.url = "https://www.example.com/";',
+  'wbinfo.timestamp = "20260206181759";',
+  "</script>",
+  "</head><body></body></html>",
+].join("\n");
+const octetStreamExample =
+  "\\u0089PNG\\r\\n\\u001a\\n\\u0000\\u0000\\u0000\\rIHDR...";
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -38,9 +51,11 @@ app.get(
         content: {
           "text/html": {
             schema: resolver(responseSchema),
+            example: htmlExample,
           },
           "application/octet-stream": {
             schema: resolver(responseSchema),
+            example: octetStreamExample,
           },
         },
       },

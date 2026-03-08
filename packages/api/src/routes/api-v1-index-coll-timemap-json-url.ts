@@ -19,6 +19,10 @@ const paramSchema = v.object({
 });
 
 const responseSchema = v.string();
+const example = [
+  '{"urlkey": "com,example)/", "timestamp": "20260206181759", "url": "https://www.example.com/", "mime": "text/html", "mime-detected": "text/html", "status": "200", "digest": "JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ", "length": "951", "offset": "607115282", "filename": "crawl-data/CC-MAIN-2026-08/segments/1770395505396.36/warc/CC-MAIN-20260206181458-20260206211458-00865.warc.gz", "languages": "eng", "encoding": "ISO-8859-1"}',
+  '{"urlkey": "com,example)/", "timestamp": "20260206222421", "url": "https://www.example.com/", "mime": "text/html", "mime-detected": "text/html", "status": "200", "digest": "JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ", "length": "953", "offset": "572768496", "filename": "crawl-data/CC-MAIN-2026-08/segments/1770395505610.3/warc/CC-MAIN-20260206211956-20260207001956-00865.warc.gz", "languages": "eng", "encoding": "ISO-8859-1"}',
+].join("\n");
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -36,6 +40,7 @@ app.get(
         content: {
           "text/x-ndjson": {
             schema: resolver(responseSchema),
+            example,
           },
         },
       },

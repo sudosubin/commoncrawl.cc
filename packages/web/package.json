@@ -8,8 +8,9 @@
     "build": "vite build",
     "typecheck": "tsgo --noEmit",
     "test": "vitest run",
+    "msw:init": "msw init public --save",
     "openapi:pull": "pnpm --filter @commoncrawl.cc/api openapi:export",
-    "openapi:generate": "orval --config orval.config.ts"
+    "openapi:generate": "orval --config orval.config.ts && pnpm exec tsx ./scripts/orval-postprocess.ts && pnpm exec oxlint --fix src/api/__generated__/index.ts src/api/__generated__/index.msw.ts && pnpm exec oxfmt src/api/__generated__/index.ts src/api/__generated__/index.msw.ts"
   },
   "dependencies": {
     "@nanostores/preact": "^1.0.0",
@@ -19,6 +20,7 @@
     "preact-iso": "^2.11.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.3.0",
     "@preact/preset-vite": "^2.10.3",
     "@tailwindcss/vite": "^4.1.12",
     "@testing-library/preact": "^3.2.4",
@@ -26,10 +28,16 @@
     "@types/node": "^24.11.0",
     "@typescript/native-preview": "7.0.0-dev.20260227.1",
     "jsdom": "^28.1.0",
+    "msw": "^2.12.10",
     "orval": "^8.5.2",
     "tailwindcss": "^4.1.12",
     "tsx": "^4.20.6",
     "vite": "8.0.0-beta.16",
     "vitest": "4.1.0-beta.5"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

@@ -7,24 +7,26 @@ export default defineConfig({
     },
     output: {
       target: "./src/api/__generated__/index.ts",
+      schemas: "./src/api/__generated__/model",
+      mode: "split",
       client: "fetch",
+      mock: { type: "msw", useExamples: true },
       clean: true,
       prettier: false,
       override: {
-        mutator: {
-          path: "./src/api/fetcher.ts",
-          name: "orvalFetch",
-        },
+        mutator: { path: "./src/api/fetcher.ts", name: "orvalFetch" },
       },
     },
     hooks: {
       afterAllFilesWrite: [
         {
-          command: "tsx ./scripts/orval-postprocess.ts",
+          command: "pnpm exec oxlint --fix src/api/__generated__/",
           injectGeneratedDirsAndFiles: false,
         },
-        "pnpm exec oxlint --fix src/api/__generated__/index.ts",
-        "pnpm exec oxfmt src/api/__generated__/index.ts",
+        {
+          command: "pnpm exec oxfmt src/api/__generated__/",
+          injectGeneratedDirsAndFiles: false,
+        },
       ],
     },
   },

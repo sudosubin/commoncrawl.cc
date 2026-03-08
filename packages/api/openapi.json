@@ -41,6 +41,16 @@
                     }
                   },
                   "required": ["creationTime", "prefixes"]
+                },
+                "example": {
+                  "creationTime": "2025-06-23T17:02:06.734458",
+                  "prefixes": [
+                    { "ipv6Prefix": "2600:1f28:365:80b0::/60" },
+                    { "ipv4Prefix": "18.97.9.168/29" },
+                    { "ipv4Prefix": "18.97.14.80/29" },
+                    { "ipv4Prefix": "18.97.14.88/30" },
+                    { "ipv4Prefix": "98.85.178.216/32" }
+                  ]
                 }
               }
             }
@@ -48,15 +58,27 @@
           "429": {
             "description": "Too Many Requests",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Too Many Requests"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>429 Too Many Requests</h1></body></html>"
+              }
             }
           },
           "503": {
             "description": "Service Unavailable",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Service Unavailable"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>503 Service Unavailable</h1></body></html>"
+              }
             }
           }
         }
@@ -71,10 +93,22 @@
           "200": {
             "description": "The api can be used to get information about a range of archive captures/mementos, including filtering, sorting, and pagination for bulk query.",
             "content": {
-              "text/x-cdxj": { "schema": { "type": "string" } },
-              "text/x-ndjson": { "schema": { "type": "string" } },
-              "application/link-format": { "schema": { "type": "string" } },
-              "text/plain": { "schema": { "type": "string" } }
+              "text/x-cdxj": {
+                "schema": { "type": "string" },
+                "example": "com,example)/ 20260206181759 {\"url\": \"https://www.example.com/\", \"mime\": \"text/html\", \"mime-detected\": \"text/html\", \"status\": \"200\", \"digest\": \"JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ\", \"length\": \"951\", \"offset\": \"607115282\", \"filename\": \"crawl-data/CC-MAIN-2026-08/segments/1770395505396.36/warc/CC-MAIN-20260206181458-20260206211458-00865.warc.gz\", \"languages\": \"eng\", \"encoding\": \"ISO-8859-1\"}\ncom,example)/ 20260206222421 {\"url\": \"https://www.example.com/\", \"mime\": \"text/html\", \"mime-detected\": \"text/html\", \"status\": \"200\", \"digest\": \"JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ\", \"length\": \"953\", \"offset\": \"572768496\", \"filename\": \"crawl-data/CC-MAIN-2026-08/segments/1770395505610.3/warc/CC-MAIN-20260206211956-20260207001956-00865.warc.gz\", \"languages\": \"eng\", \"encoding\": \"ISO-8859-1\"}"
+              },
+              "text/x-ndjson": {
+                "schema": { "type": "string" },
+                "example": "{\"urlkey\": \"com,example)/\", \"timestamp\": \"20260206181759\", \"url\": \"https://www.example.com/\", \"mime\": \"text/html\", \"mime-detected\": \"text/html\", \"status\": \"200\", \"digest\": \"JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ\", \"length\": \"951\", \"offset\": \"607115282\", \"filename\": \"crawl-data/CC-MAIN-2026-08/segments/1770395505396.36/warc/CC-MAIN-20260206181458-20260206211458-00865.warc.gz\", \"languages\": \"eng\", \"encoding\": \"ISO-8859-1\"}\n{\"urlkey\": \"com,example)/\", \"timestamp\": \"20260206222421\", \"url\": \"https://www.example.com/\", \"mime\": \"text/html\", \"mime-detected\": \"text/html\", \"status\": \"200\", \"digest\": \"JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ\", \"length\": \"953\", \"offset\": \"572768496\", \"filename\": \"crawl-data/CC-MAIN-2026-08/segments/1770395505610.3/warc/CC-MAIN-20260206211956-20260207001956-00865.warc.gz\", \"languages\": \"eng\", \"encoding\": \"ISO-8859-1\"}"
+              },
+              "application/link-format": {
+                "schema": { "type": "string" },
+                "example": "<https://www.example.com/>; rel=\"memento\"; datetime=\"Fri, 06 Feb 2026 18:17:59 GMT\",\n<https://www.example.com/>; rel=\"memento\"; datetime=\"Fri, 06 Feb 2026 22:24:21 GMT\""
+              },
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "com,example)/ 20260206181759 https://www.example.com/ text/html text/html 200 JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ 951 607115282 crawl-data/CC-MAIN-2026-08/segments/1770395505396.36/warc/CC-MAIN-20260206181458-20260206211458-00865.warc.gz eng ISO-8859-1\ncom,example)/ 20260206222421 https://www.example.com/ text/html text/html 200 JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ 953 572768496 crawl-data/CC-MAIN-2026-08/segments/1770395505610.3/warc/CC-MAIN-20260206211956-20260207001956-00865.warc.gz eng ISO-8859-1"
+              }
             }
           },
           "400": {
@@ -85,26 +119,44 @@
                   "type": "object",
                   "properties": { "message": { "type": "string" } },
                   "required": ["message"]
-                }
+                },
+                "example": { "message": "The \"url\" param is required" }
               }
             }
           },
           "404": {
             "description": "Not Found",
-            "content": { "text/plain": { "schema": { "type": "string" } } }
+            "content": {
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Not Found"
+              }
+            }
           },
           "429": {
             "description": "Too Many Requests",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Too Many Requests"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>429 Too Many Requests</h1></body></html>"
+              }
             }
           },
           "503": {
             "description": "Service Unavailable",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Service Unavailable"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>503 Service Unavailable</h1></body></html>"
+              }
             }
           }
         },
@@ -126,24 +178,46 @@
         "responses": {
           "200": {
             "description": "Returns the timemap as newline-delimited JSON lines (NDJSON) format.",
-            "content": { "text/x-ndjson": { "schema": { "type": "string" } } }
+            "content": {
+              "text/x-ndjson": {
+                "schema": { "type": "string" },
+                "example": "{\"urlkey\": \"com,example)/\", \"timestamp\": \"20260206181759\", \"url\": \"https://www.example.com/\", \"mime\": \"text/html\", \"mime-detected\": \"text/html\", \"status\": \"200\", \"digest\": \"JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ\", \"length\": \"951\", \"offset\": \"607115282\", \"filename\": \"crawl-data/CC-MAIN-2026-08/segments/1770395505396.36/warc/CC-MAIN-20260206181458-20260206211458-00865.warc.gz\", \"languages\": \"eng\", \"encoding\": \"ISO-8859-1\"}\n{\"urlkey\": \"com,example)/\", \"timestamp\": \"20260206222421\", \"url\": \"https://www.example.com/\", \"mime\": \"text/html\", \"mime-detected\": \"text/html\", \"status\": \"200\", \"digest\": \"JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ\", \"length\": \"953\", \"offset\": \"572768496\", \"filename\": \"crawl-data/CC-MAIN-2026-08/segments/1770395505610.3/warc/CC-MAIN-20260206211956-20260207001956-00865.warc.gz\", \"languages\": \"eng\", \"encoding\": \"ISO-8859-1\"}"
+              }
+            }
           },
           "404": {
             "description": "Not Found",
-            "content": { "text/plain": { "schema": { "type": "string" } } }
+            "content": {
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Not Found"
+              }
+            }
           },
           "429": {
             "description": "Too Many Requests",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Too Many Requests"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>429 Too Many Requests</h1></body></html>"
+              }
             }
           },
           "503": {
             "description": "Service Unavailable",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Service Unavailable"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>503 Service Unavailable</h1></body></html>"
+              }
             }
           }
         },
@@ -172,25 +246,45 @@
           "200": {
             "description": "Returns an ``application/link-format`` as required by the Memento spec.",
             "content": {
-              "application/link-format": { "schema": { "type": "string" } }
+              "application/link-format": {
+                "schema": { "type": "string" },
+                "example": "<https://index.commoncrawl.org/CC-MAIN-2026-08/timemap/link/https://example.com/>; rel=\"self\"; type=\"application/link-format\"; from=\"Fri, 06 Feb 2026 18:17:59 GMT\",\n<https://index.commoncrawl.org/CC-MAIN-2026-08/https://example.com/>; rel=\"timegate\",\n<https://example.com/>; rel=\"original\",\n<https://index.commoncrawl.org/CC-MAIN-2026-08/20260206181759/https://www.example.com/>; rel=\"memento\"; datetime=\"Fri, 06 Feb 2026 18:17:59 GMT\",\n<https://index.commoncrawl.org/CC-MAIN-2026-08/20260206222421/https://www.example.com/>; rel=\"memento\"; datetime=\"Fri, 06 Feb 2026 22:24:21 GMT\""
+              }
             }
           },
           "404": {
             "description": "Not Found",
-            "content": { "text/plain": { "schema": { "type": "string" } } }
+            "content": {
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Not Found"
+              }
+            }
           },
           "429": {
             "description": "Too Many Requests",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Too Many Requests"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>429 Too Many Requests</h1></body></html>"
+              }
             }
           },
           "503": {
             "description": "Service Unavailable",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Service Unavailable"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>503 Service Unavailable</h1></body></html>"
+              }
             }
           }
         },
@@ -218,24 +312,46 @@
         "responses": {
           "200": {
             "description": "Returns a timemap in the native CDXJ format.",
-            "content": { "text/x-cdxj": { "schema": { "type": "string" } } }
+            "content": {
+              "text/x-cdxj": {
+                "schema": { "type": "string" },
+                "example": "com,example)/ 20260206181759 {\"url\": \"https://www.example.com/\", \"mime\": \"text/html\", \"mime-detected\": \"text/html\", \"status\": \"200\", \"digest\": \"JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ\", \"length\": \"951\", \"offset\": \"607115282\", \"filename\": \"crawl-data/CC-MAIN-2026-08/segments/1770395505396.36/warc/CC-MAIN-20260206181458-20260206211458-00865.warc.gz\", \"languages\": \"eng\", \"encoding\": \"ISO-8859-1\"}\ncom,example)/ 20260206222421 {\"url\": \"https://www.example.com/\", \"mime\": \"text/html\", \"mime-detected\": \"text/html\", \"status\": \"200\", \"digest\": \"JUWMXAQNHPTRTHYQWT3EJILYCL7YC3PQ\", \"length\": \"953\", \"offset\": \"572768496\", \"filename\": \"crawl-data/CC-MAIN-2026-08/segments/1770395505610.3/warc/CC-MAIN-20260206211956-20260207001956-00865.warc.gz\", \"languages\": \"eng\", \"encoding\": \"ISO-8859-1\"}"
+              }
+            }
           },
           "404": {
             "description": "Not Found",
-            "content": { "text/plain": { "schema": { "type": "string" } } }
+            "content": {
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Not Found"
+              }
+            }
           },
           "429": {
             "description": "Too Many Requests",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Too Many Requests"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>429 Too Many Requests</h1></body></html>"
+              }
             }
           },
           "503": {
             "description": "Service Unavailable",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Service Unavailable"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>503 Service Unavailable</h1></body></html>"
+              }
             }
           }
         },
@@ -264,26 +380,49 @@
           "200": {
             "description": "The 'canonical' URI-M is included in the ``content-location`` header and should be used to reference the memento in the future.",
             "content": {
-              "text/html": { "schema": { "type": "string" } },
-              "application/octet-stream": { "schema": { "type": "string" } }
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<!doctype html><html lang=\"en\"><head>\n<!-- WB Insert -->\n<script>\nwbinfo = {};\nwbinfo.top_url = \"https://index.commoncrawl.org/CC-MAIN-2026-08/20260206181759/https://www.example.com/\";\nwbinfo.url = \"https://www.example.com/\";\nwbinfo.timestamp = \"20260206181759\";\n</script>\n</head><body></body></html>"
+              },
+              "application/octet-stream": {
+                "schema": { "type": "string" },
+                "example": "\\u0089PNG\\r\\n\\u001a\\n\\u0000\\u0000\\u0000\\rIHDR..."
+              }
             }
           },
           "404": {
             "description": "Not Found",
-            "content": { "text/plain": { "schema": { "type": "string" } } }
+            "content": {
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Not Found"
+              }
+            }
           },
           "429": {
             "description": "Too Many Requests",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Too Many Requests"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>429 Too Many Requests</h1></body></html>"
+              }
             }
           },
           "503": {
             "description": "Service Unavailable",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Service Unavailable"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>503 Service Unavailable</h1></body></html>"
+              }
             }
           }
         },
@@ -318,26 +457,49 @@
           "200": {
             "description": "To avoid an extra redirect, the TimeGate returns the requested memento directly (200-style negotiation) without redirecting to its canonical, timestamped url.",
             "content": {
-              "text/html": { "schema": { "type": "string" } },
-              "application/octet-stream": { "schema": { "type": "string" } }
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<!doctype html><html lang=\"en\"><head>\n<!-- WB Insert -->\n<script>\nwbinfo = {};\nwbinfo.top_url = \"https://index.commoncrawl.org/CC-MAIN-2026-08/20260206181759/https://www.example.com/\";\nwbinfo.url = \"https://www.example.com/\";\nwbinfo.timestamp = \"20260206181759\";\n</script>\n</head><body></body></html>"
+              },
+              "application/octet-stream": {
+                "schema": { "type": "string" },
+                "example": "\\u0089PNG\\r\\n\\u001a\\n\\u0000\\u0000\\u0000\\rIHDR..."
+              }
             }
           },
           "404": {
             "description": "Not Found",
-            "content": { "text/plain": { "schema": { "type": "string" } } }
+            "content": {
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Not Found"
+              }
+            }
           },
           "429": {
             "description": "Too Many Requests",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Too Many Requests"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>429 Too Many Requests</h1></body></html>"
+              }
             }
           },
           "503": {
             "description": "Service Unavailable",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Service Unavailable"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>503 Service Unavailable</h1></body></html>"
+              }
             }
           }
         },
@@ -386,22 +548,60 @@
                       "to"
                     ]
                   }
-                }
+                },
+                "example": [
+                  {
+                    "id": "CC-MAIN-2026-08",
+                    "name": "February 2026 Index",
+                    "timegate": "https://index.commoncrawl.org/CC-MAIN-2026-08/",
+                    "cdx-api": "https://index.commoncrawl.org/CC-MAIN-2026-08-index",
+                    "from": "2026-02-06T18:14:58",
+                    "to": "2026-02-19T11:27:33"
+                  },
+                  {
+                    "id": "CC-MAIN-2026-04",
+                    "name": "January 2026 Index",
+                    "timegate": "https://index.commoncrawl.org/CC-MAIN-2026-04/",
+                    "cdx-api": "https://index.commoncrawl.org/CC-MAIN-2026-04-index",
+                    "from": "2026-01-12T16:12:39",
+                    "to": "2026-01-25T14:05:40"
+                  },
+                  {
+                    "id": "CC-MAIN-2025-51",
+                    "name": "December 2025 Index",
+                    "timegate": "https://index.commoncrawl.org/CC-MAIN-2025-51/",
+                    "cdx-api": "https://index.commoncrawl.org/CC-MAIN-2025-51-index",
+                    "from": "2025-12-04T19:18:28",
+                    "to": "2025-12-17T14:22:46"
+                  }
+                ]
               }
             }
           },
           "429": {
             "description": "Too Many Requests",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Too Many Requests"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>429 Too Many Requests</h1></body></html>"
+              }
             }
           },
           "503": {
             "description": "Service Unavailable",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Service Unavailable"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>503 Service Unavailable</h1></body></html>"
+              }
             }
           }
         }
@@ -452,22 +652,78 @@
                     },
                     "required": ["id", "crawls", "index", "location", "stats"]
                   }
-                }
+                },
+                "example": [
+                  {
+                    "id": "cc-main-2025-26-dec-jan-feb",
+                    "crawls": [
+                      "CC-MAIN-2025-51",
+                      "CC-MAIN-2026-04",
+                      "CC-MAIN-2026-08"
+                    ],
+                    "index": "https://data.commoncrawl.org/projects/hyperlinkgraph/cc-main-2025-26-dec-jan-feb/index.html",
+                    "location": "s3://commoncrawl/projects/hyperlinkgraph/cc-main-2025-26-dec-jan-feb/",
+                    "stats": {
+                      "host": { "nodes": 288604261, "arcs": 12365071120 },
+                      "domain": { "nodes": 134222466, "arcs": 5380423856 }
+                    }
+                  },
+                  {
+                    "id": "cc-main-2025-26-nov-dec-jan",
+                    "crawls": [
+                      "CC-MAIN-2025-47",
+                      "CC-MAIN-2025-51",
+                      "CC-MAIN-2026-04"
+                    ],
+                    "index": "https://data.commoncrawl.org/projects/hyperlinkgraph/cc-main-2025-26-nov-dec-jan/index.html",
+                    "location": "s3://commoncrawl/projects/hyperlinkgraph/cc-main-2025-26-nov-dec-jan/",
+                    "stats": {
+                      "host": { "nodes": 279356058, "arcs": 13431887360 },
+                      "domain": { "nodes": 122294847, "arcs": 6112336768 }
+                    }
+                  },
+                  {
+                    "id": "cc-main-2025-oct-nov-dec",
+                    "crawls": [
+                      "CC-MAIN-2025-43",
+                      "CC-MAIN-2025-47",
+                      "CC-MAIN-2025-51"
+                    ],
+                    "index": "https://data.commoncrawl.org/projects/hyperlinkgraph/cc-main-2025-oct-nov-dec/index.html",
+                    "location": "s3://commoncrawl/projects/hyperlinkgraph/cc-main-2025-oct-nov-dec/",
+                    "stats": {
+                      "host": { "nodes": 250753325, "arcs": 10858559096 },
+                      "domain": { "nodes": 121304598, "arcs": 6220780848 }
+                    }
+                  }
+                ]
               }
             }
           },
           "429": {
             "description": "Too Many Requests",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Too Many Requests"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>429 Too Many Requests</h1></body></html>"
+              }
             }
           },
           "503": {
             "description": "Service Unavailable",
             "content": {
-              "text/plain": { "schema": { "type": "string" } },
-              "text/html": { "schema": { "type": "string" } }
+              "text/plain": {
+                "schema": { "type": "string" },
+                "example": "Service Unavailable"
+              },
+              "text/html": {
+                "schema": { "type": "string" },
+                "example": "<html><body><h1>503 Service Unavailable</h1></body></html>"
+              }
             }
           }
         }

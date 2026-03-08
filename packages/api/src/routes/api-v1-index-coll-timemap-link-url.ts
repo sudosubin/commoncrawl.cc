@@ -19,6 +19,13 @@ const paramSchema = v.object({
 });
 
 const responseSchema = v.string();
+const example = [
+  '<https://index.commoncrawl.org/CC-MAIN-2026-08/timemap/link/https://example.com/>; rel="self"; type="application/link-format"; from="Fri, 06 Feb 2026 18:17:59 GMT",',
+  '<https://index.commoncrawl.org/CC-MAIN-2026-08/https://example.com/>; rel="timegate",',
+  '<https://example.com/>; rel="original",',
+  '<https://index.commoncrawl.org/CC-MAIN-2026-08/20260206181759/https://www.example.com/>; rel="memento"; datetime="Fri, 06 Feb 2026 18:17:59 GMT",',
+  '<https://index.commoncrawl.org/CC-MAIN-2026-08/20260206222421/https://www.example.com/>; rel="memento"; datetime="Fri, 06 Feb 2026 22:24:21 GMT"',
+].join("\n");
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -36,6 +43,7 @@ app.get(
         content: {
           "application/link-format": {
             schema: resolver(responseSchema),
+            example,
           },
         },
       },

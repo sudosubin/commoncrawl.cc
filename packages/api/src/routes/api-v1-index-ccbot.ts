@@ -21,6 +21,17 @@ const responseSchema = v.object({
   ),
 });
 
+const example: v.InferOutput<typeof responseSchema> = {
+  creationTime: "2025-06-23T17:02:06.734458",
+  prefixes: [
+    { ipv6Prefix: "2600:1f28:365:80b0::/60" },
+    { ipv4Prefix: "18.97.9.168/29" },
+    { ipv4Prefix: "18.97.14.80/29" },
+    { ipv4Prefix: "18.97.14.88/30" },
+    { ipv4Prefix: "98.85.178.216/32" },
+  ],
+};
+
 app.get(
   "/api/v1/index/ccbot.json",
   describeRoute({
@@ -30,6 +41,7 @@ app.get(
         content: {
           "application/json": {
             schema: resolver(responseSchema),
+            example,
           },
         },
       },
