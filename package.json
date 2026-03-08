@@ -7,6 +7,7 @@
     "fmt:check": "oxfmt --check",
     "lint": "oxlint --type-aware",
     "lint:fix": "oxlint --fix --type-aware",
+    "openapi:sync": "pnpm --filter @commoncrawl.cc/api openapi:export && pnpm --filter @commoncrawl.cc/web openapi:generate",
     "prepare": "simple-git-hooks"
   },
   "devDependencies": {
@@ -17,7 +18,7 @@
     "simple-git-hooks": "^2.13.1"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm exec lint-staged"
+    "pre-commit": "pnpm run openapi:sync && git add packages/api/openapi.json packages/web/src/api/__generated__/index.ts && pnpm exec lint-staged"
   },
   "lint-staged": {
     "*": "oxfmt --no-error-on-unmatched-pattern",

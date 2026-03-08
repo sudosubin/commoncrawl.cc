@@ -1,0 +1,35 @@
+{
+  "name": "@commoncrawl.cc/web",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3000",
+    "build": "vite build",
+    "typecheck": "tsgo --noEmit",
+    "test": "vitest run",
+    "openapi:pull": "pnpm --filter @commoncrawl.cc/api openapi:export",
+    "openapi:generate": "orval --config orval.config.ts"
+  },
+  "dependencies": {
+    "@nanostores/preact": "^1.0.0",
+    "@nanostores/query": "^0.3.4",
+    "nanostores": "^1.1.0",
+    "preact": "^10.28.4",
+    "preact-iso": "^2.11.1"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.3",
+    "@tailwindcss/vite": "^4.1.12",
+    "@testing-library/preact": "^3.2.4",
+    "@tsconfig/vite-react": "^7.0.2",
+    "@types/node": "^24.11.0",
+    "@typescript/native-preview": "7.0.0-dev.20260227.1",
+    "jsdom": "^28.1.0",
+    "orval": "^8.5.2",
+    "tailwindcss": "^4.1.12",
+    "tsx": "^4.20.6",
+    "vite": "8.0.0-beta.16",
+    "vitest": "4.1.0-beta.5"
+  }
+}

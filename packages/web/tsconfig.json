@@ -1,0 +1,12 @@
+{
+  "extends": "@tsconfig/vite-react/tsconfig.json",
+  "compilerOptions": {
+    "jsxImportSource": "preact",
+    "types": ["node", "vite/client", "vitest/globals"],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "erasableSyntaxOnly": true
+  },
+  "include": ["src", "scripts", "vite.config.ts"]
+}
