@@ -9,5 +9,5 @@
     },
     "erasableSyntaxOnly": true
   },
-  "include": ["src", "test", "vite.config.ts"]
+  "include": ["scripts", "src", "test", "vite.config.ts"]
 }

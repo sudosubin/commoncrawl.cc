@@ -1,0 +1,478 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Common Crawl Index Server API Proxy",
+    "description": "Development documentation",
+    "version": "0.0.1"
+  },
+  "paths": {
+    "/api/v1/index/ccbot.json": {
+      "get": {
+        "operationId": "getApiV1IndexCcbotJson",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "creationTime": { "type": "string" },
+                    "prefixes": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "ipv4Prefix": { "type": "string" }
+                            },
+                            "required": ["ipv4Prefix"]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "ipv6Prefix": { "type": "string" }
+                            },
+                            "required": ["ipv6Prefix"]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": ["creationTime", "prefixes"]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/index/{coll}": {
+      "get": {
+        "operationId": "getApiV1IndexByColl",
+        "summary": "CDXJ Server API",
+        "description": "The following is a reference of the api for querying and filtering archived resources.\n\nThe api can be used to get information about a range of archive captures/mementos, including filtering, sorting, and pagination for bulk query.\n\nThe actual archive files (WARC/ARC) files are not loaded during this query, only the generated CDXJ index.",
+        "responses": {
+          "200": {
+            "description": "The api can be used to get information about a range of archive captures/mementos, including filtering, sorting, and pagination for bulk query.",
+            "content": {
+              "text/x-cdxj": { "schema": { "type": "string" } },
+              "text/x-ndjson": { "schema": { "type": "string" } },
+              "application/link-format": { "schema": { "type": "string" } },
+              "text/plain": { "schema": { "type": "string" } }
+            }
+          },
+          "400": {
+            "description": "The only required parameter to the cdx server api is the url.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "message": { "type": "string" } },
+                  "required": ["message"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "text/plain": { "schema": { "type": "string" } } }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "coll",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/api/v1/index/{coll}/timemap/json/{url}": {
+      "get": {
+        "operationId": "getApiV1IndexByCollTimemapJsonByUrl",
+        "summary": "TimeMap API",
+        "description": "The timemap API is available at ``/<coll>/timemap/<type>/<url>`` for any pywb collection ``<coll>`` and ``<url>`` in the collection.",
+        "responses": {
+          "200": {
+            "description": "Returns the timemap as newline-delimited JSON lines (NDJSON) format.",
+            "content": { "text/x-ndjson": { "schema": { "type": "string" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "text/plain": { "schema": { "type": "string" } } }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "coll",
+            "required": true
+          },
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "url",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/api/v1/index/{coll}/timemap/link/{url}": {
+      "get": {
+        "operationId": "getApiV1IndexByCollTimemapLinkByUrl",
+        "summary": "TimeMap API",
+        "description": "The timemap API is available at ``/<coll>/timemap/<type>/<url>`` for any pywb collection ``<coll>`` and ``<url>`` in the collection.",
+        "responses": {
+          "200": {
+            "description": "Returns an ``application/link-format`` as required by the Memento spec.",
+            "content": {
+              "application/link-format": { "schema": { "type": "string" } }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "text/plain": { "schema": { "type": "string" } } }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "coll",
+            "required": true
+          },
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "url",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/api/v1/index/{coll}/timemap/cdxj/{url}": {
+      "get": {
+        "operationId": "getApiV1IndexByCollTimemapCdxjByUrl",
+        "summary": "TimeMap API",
+        "description": "The timemap API is available at ``/<coll>/timemap/<type>/<url>`` for any pywb collection ``<coll>`` and ``<url>`` in the collection.",
+        "responses": {
+          "200": {
+            "description": "Returns a timemap in the native CDXJ format.",
+            "content": { "text/x-cdxj": { "schema": { "type": "string" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "text/plain": { "schema": { "type": "string" } } }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "coll",
+            "required": true
+          },
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "url",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/api/v1/index/{coll}/{timestamp}/{url}": {
+      "get": {
+        "operationId": "getApiV1IndexByCollByTimestampByUrl",
+        "summary": "Memento API",
+        "description": "pywb supports the Memento Protocol as specified in RFC 7089 and provides API endpoints for Memento TimeMaps and TimeGates per collection.",
+        "responses": {
+          "200": {
+            "description": "The 'canonical' URI-M is included in the ``content-location`` header and should be used to reference the memento in the future.",
+            "content": {
+              "text/html": { "schema": { "type": "string" } },
+              "application/octet-stream": { "schema": { "type": "string" } }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "text/plain": { "schema": { "type": "string" } } }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "coll",
+            "required": true
+          },
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "timestamp",
+            "required": true
+          },
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "url",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/api/v1/index/{coll}/{url}": {
+      "get": {
+        "operationId": "getApiV1IndexByCollByUrl",
+        "summary": "TimeGate API",
+        "description": "The TimeGate API for any pywb collection is ``/<coll>/<url>``, eg. ``/my-coll/http://example.com/``.",
+        "responses": {
+          "200": {
+            "description": "To avoid an extra redirect, the TimeGate returns the requested memento directly (200-style negotiation) without redirecting to its canonical, timestamped url.",
+            "content": {
+              "text/html": { "schema": { "type": "string" } },
+              "application/octet-stream": { "schema": { "type": "string" } }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "text/plain": { "schema": { "type": "string" } } }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "coll",
+            "required": true
+          },
+          {
+            "schema": { "type": "string" },
+            "in": "path",
+            "name": "url",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/api/v1/index/collinfo.json": {
+      "get": {
+        "operationId": "getApiV1IndexCollinfoJson",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "name": { "type": "string" },
+                      "timegate": { "type": "string" },
+                      "cdx-api": { "type": "string" },
+                      "from": { "type": "string" },
+                      "to": { "type": "string" }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "timegate",
+                      "cdx-api",
+                      "from",
+                      "to"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/index/graphinfo.json": {
+      "get": {
+        "operationId": "getApiV1IndexGraphinfoJson",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "crawls": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "index": { "type": "string" },
+                      "location": { "type": "string" },
+                      "stats": {
+                        "type": "object",
+                        "properties": {
+                          "host": {
+                            "type": "object",
+                            "properties": {
+                              "nodes": { "type": "number" },
+                              "arcs": { "type": "number" }
+                            },
+                            "required": ["nodes", "arcs"]
+                          },
+                          "domain": {
+                            "type": "object",
+                            "properties": {
+                              "nodes": { "type": "number" },
+                              "arcs": { "type": "number" }
+                            },
+                            "required": ["nodes", "arcs"]
+                          }
+                        },
+                        "required": ["host", "domain"]
+                      }
+                    },
+                    "required": ["id", "crawls", "index", "location", "stats"]
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "text/plain": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {}
+}

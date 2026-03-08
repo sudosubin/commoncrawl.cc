@@ -45,6 +45,7 @@ export function createApp() {
           version: "0.0.1",
         },
       },
+      excludeStaticFile: false,
     }),
   );
 
