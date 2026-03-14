@@ -1,7 +1,7 @@
 import { render } from "preact";
 import { LocationProvider } from "preact-iso";
 
-import { App } from "@/app";
+import App from "@/app";
 
 import "@/styles.css";
 

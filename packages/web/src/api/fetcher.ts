@@ -1,39 +1,25 @@
-function resolveApiUrl(path: string): string {
+const resolveApiUrl = (path: string) => {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
-  if (!baseUrl) {
-    throw new Error("VITE_API_BASE_URL is required");
-  }
+  if (!baseUrl) throw new Error("VITE_API_BASE_URL is required");
 
-  const normalizedBaseUrl = baseUrl.replace(/\/+$/, "");
-  const normalizedPath = path.replace(/^\/+/, "");
+  return `${baseUrl.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
+};
 
-  return `${normalizedBaseUrl}/${normalizedPath}`;
-}
-
-async function parseResponseBody(response: Response): Promise<unknown> {
-  if (response.status === 204 || response.status === 205) {
-    return undefined;
-  }
+const parseResponseBody = async (response: Response) => {
+  if (response.status === 204 || response.status === 205) return undefined;
 
   const contentType = response.headers.get("content-type") ?? "";
+  return contentType.includes("application/json")
+    ? response.json()
+    : response.text();
+};
 
-  if (contentType.includes("application/json")) {
-    return response.json();
-  }
-
-  return response.text();
-}
-
-export async function orvalFetch<T>(
+export const orvalFetch = async <T>(
   path: string,
   options: RequestInit,
-): Promise<T> {
+): Promise<T> => {
   const response = await fetch(resolveApiUrl(path), options);
   const data = await parseResponseBody(response);
 
-  return {
-    data,
-    status: response.status,
-    headers: response.headers,
-  } as T;
-}
+  return { data, status: response.status, headers: response.headers } as T;
+};

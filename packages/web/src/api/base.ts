@@ -1,14 +1,9 @@
-type ApiResponse = {
-  status: number;
-  data: unknown;
-};
+type ApiResponse = { status: number; data: unknown };
 
 type AwaitedResponse<TRequest extends () => Promise<ApiResponse>> = Awaited<
   ReturnType<TRequest>
 >;
-
 type StatusOf<TResponse extends ApiResponse> = TResponse["status"];
-
 type DataOfStatus<
   TResponse extends ApiResponse,
   TStatus extends StatusOf<TResponse>,
@@ -17,29 +12,27 @@ type DataOfStatus<
     ? TData
     : never;
 
-export function validateStatus<
+export const validateStatus = <
   TResponse extends ApiResponse,
   TStatus extends StatusOf<TResponse>,
 >(
   response: TResponse,
   expectedStatus: TStatus,
   resourceName: string,
-): DataOfStatus<TResponse, TStatus> {
+): DataOfStatus<TResponse, TStatus> => {
   if (response.status !== expectedStatus) {
     throw new Error(`Failed to load ${resourceName} (${response.status})`);
   }
 
   return response.data as DataOfStatus<TResponse, TStatus>;
-}
+};
 
-export async function withStatus<
+export const withStatus = async <
   TRequest extends () => Promise<ApiResponse>,
   TStatus extends StatusOf<AwaitedResponse<TRequest>>,
 >(
   request: TRequest,
   expectedStatus: TStatus,
   resourceName: string,
-): Promise<DataOfStatus<AwaitedResponse<TRequest>, TStatus>> {
-  const response = await request();
-  return validateStatus(response, expectedStatus, resourceName);
-}
+): Promise<DataOfStatus<AwaitedResponse<TRequest>, TStatus>> =>
+  validateStatus(await request(), expectedStatus, resourceName);
