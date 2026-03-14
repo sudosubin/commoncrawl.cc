@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
+
 import { createApp } from "@/app";
 
 const outputPath = process.argv[2] ?? "./openapi.json";
