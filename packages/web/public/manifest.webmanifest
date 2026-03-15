@@ -1,0 +1,27 @@
+{
+  "name": "commoncrawl.cc",
+  "short_name": "commoncrawl.cc",
+  "description": "Search Common Crawl snapshots, inspect capture timelines, and explore archived web responses from a focused workspace.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#152A47",
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/favicon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
